@@ -1,6 +1,6 @@
 // initialize dependencies!
-const express = require('express');
-const exphbs = require('express-handlebars');
+import express from 'express';
+import { engine } from 'express-handlebars';
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
 
@@ -18,17 +18,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Parse application/json
 app.use(bodyParser.json());
 
+
 // Static files
 app.use(express.static('public'));
 
 // Template engine
-app.engine('hbs', exphbs({extname: '.hbs'}));
+app.engine('hbs', engine());
 app.set('view engine', 'hbs');
-
+app.set('views', './views');
 
 // Router
 app.get('', (req, res) => {
-    res.render('home', {layout: 'main'});
+    res.render('home');
 });
 
 

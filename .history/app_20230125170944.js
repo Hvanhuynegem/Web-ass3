@@ -18,19 +18,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Parse application/json
 app.use(bodyParser.json());
 
+
 // Static files
 app.use(express.static('public'));
 
 // Template engine
-app.engine('hbs', exphbs({extname: '.hbs'}));
+app.engine('hbs', exphbs( {extname: '.hbs'}));
 app.set('view engine', 'hbs');
-
 
 // Router
 app.get('', (req, res) => {
-    res.render('home', {layout: 'main'});
+    res.render('home');
 });
-
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
