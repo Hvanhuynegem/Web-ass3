@@ -1,32 +1,10 @@
-//const User = require('../../models/User');
-// I DID THIS!!!
-// View Users
-//exports.view = (req, res) => {
-  // User the connection
-  //User.view()
-  //.then(rows => {
-  // res.render('home', { rows, removedUser });})
-    //.catch(err => {
-     // console.log(err);
-    //});
-    //console.log('The data from user table: \n', rows);
-  //};
-
-
-const mysql = require('mysql');
-
-// Connection Pool
-let connection = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME
-});
+const User = require('../../models/User');
 
 // View Users
 exports.view = (req, res) => {
   // User the connection
-  connection.query('SELECT * FROM user WHERE status = "active"', (err, rows) => {
+  const user = new User();
+  user.showAll((err, rows) => {
     // When done with the connection, release it
     if (!err) {
       let removedUser = req.query.removed;
@@ -37,8 +15,6 @@ exports.view = (req, res) => {
     console.log('The data from user table: \n', rows);
   });
 }
-
-
 
 // Find User by Search
 exports.find = (req, res) => {
