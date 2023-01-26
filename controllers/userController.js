@@ -7,7 +7,7 @@ console.log(User);
   User.viewActiveUsers((err, rows) => {
     if (!err) {
       let removedUser = req.query.removed;
-      res.render('home', { rows, removedUser });
+      res.render('home', { rows, removedUser: removedUser });
     } else {
       console.log(err);
     }
@@ -20,7 +20,7 @@ exports.find = (req, res) => {
   let searchTerm = req.body.search;
   User.findUser(searchTerm, (err, rows) => {
     if (!err) {
-      res.render('home', { rows });
+      res.render('home', { rows, removedUser: null });
     } else {
       console.log(err);
     }
@@ -29,13 +29,12 @@ exports.find = (req, res) => {
 }
 
 exports.form = (req, res) => {
-  res.render('add-user');
+  res.render('add-user', { alert: '' });
 }
 
 // Add new user
 exports.create = (req, res) => {
   const { first_name, last_name, email, phone, comments } = req.body;
-  let searchTerm = req.body.search;
 
   User.addUser({
       first_name: first_name, 
@@ -58,7 +57,7 @@ exports.create = (req, res) => {
 exports.edit = (req, res) => {
   User.editUser(req.params.id, (err, rows) => {
     if (!err) {
-      res.render('edit-user', { rows });
+      res.render('edit-user', { rows, alert: '' });
     } else {
       console.log(err);
     }
