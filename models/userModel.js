@@ -1,7 +1,5 @@
 const mysql = require('mysql');
 
-// make a class user that will manage all the functions on top, with callbacks
-// DONT USE PROMISES
 class User {
     constructor() {
         this.connection = mysql.createConnection({
@@ -13,6 +11,7 @@ class User {
     }
 
     // view active users
+    // we now consider active users as users with stus none or status active, because we want to see both types of users on the main dashboard
     viewActiveUsers(callback) {
         this.connection.query('SELECT * FROM user WHERE status = "active" OR status = "none"', (err, rows) => {
 
