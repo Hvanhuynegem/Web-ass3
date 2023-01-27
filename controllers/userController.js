@@ -3,7 +3,6 @@ const User = require('../models/userModel');
 
 // View Users
 exports.view = (req, res) => {
-console.log(User);
   User.viewActiveUsers((err, rows) => {
     if (!err) {
       let removedUser = req.query.removed;
@@ -140,10 +139,9 @@ exports.viewall = (req, res) => {
 exports.activateUser = (req, res) => {
   User.activateUser(req.params.id, (err, rows) => {
     if (!err) {
-      User.viewUsers(req.params.id, (err, rows) => {
+      User.viewActiveUsers((err, rows) => {
         if (!err) {
-          let name = rows[0].first_name;
-          res.render('view-user', { rows, alert: `${name} has been activated.` });
+          res.render('home', { rows, removedUser: null });
         } else {
           console.log(err);
         }
@@ -161,10 +159,9 @@ exports.activateUser = (req, res) => {
 exports.deactivateUser = (req, res) => {
   User.deactivateUser(req.params.id, (err, rows) => {
     if (!err) {
-      User.viewUsers(req.params.id, (err, rows) => {
+      User.viewActiveUsers((err, rows) => {
         if (!err) {
-          let name = rows[0].first_name;
-          res.render('view-user', { rows, alert: `${name} has been deactivated.` });
+          res.render('home', { rows, removedUser: null });
         } else {
           console.log(err);
         }

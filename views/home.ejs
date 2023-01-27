@@ -42,10 +42,20 @@
       <td><%=row.phone%></td>
 
       <td class="text-end">
-        <a href="/viewuser/<%=row.id%>" type="button" class="btn btn-light btn-small"><i class="bi bi-eye"></i> View</a>
-        <a href="/edituser/<%=row.id%>" type="button" class="btn btn-light btn-small"><i class="bi bi-pencil"></i>
-          Edit</a>
-        <a href="/<%=row.id%>" type="button" class="btn btn-light btn-small"><i class="bi bi-person-x"></i> Delete</a>
+
+        <% if (row.status == "none") { %>
+        <form class="g-3 needs-validation" method="POST" action="/activateuser/<%=row.id%>" novalidate> 
+          <input type="submit" class="btn btn-light btn-small" style="width: 10em !important;" value="Activate User">
+        <% } else { %>
+        <form class="g-3 needs-validation" method="POST" action="/deactivateuser/<%=row.id%>" novalidate> 
+          <input type="submit" class="btn btn-light btn-small" style="width: 10em !important;" value="Deactivate User">
+        <% } %>
+
+          <a href="/viewuser/<%=row.id%>" type="button" class="btn btn-light btn-small"><i class="bi bi-eye"></i> View</a>
+          <a href="/edituser/<%=row.id%>" type="button" class="btn btn-light btn-small"><i class="bi bi-pencil"></i>
+            Edit</a>
+          <a href="/<%=row.id%>" type="button" class="btn btn-light btn-small"><i class="bi bi-person-x"></i> Delete</a>
+        </form>
       </td>
     </tr>
     <% }); %>
