@@ -5,6 +5,27 @@
   </ol>
 </nav>
 
+<% if (alert) { %>
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <%= alert %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% } %>
+
+<% rows.forEach(function(row) { 
+  if (row.status == "none") { %>
+<form class="row g-3 needs-validation" method="POST" action="/activateuser/<%=row.id%>" novalidate> 
+  <input type="submit" class="btn btn-primary" value="Activate User">
+</form>
+
+<% } else { %>
+
+<form class="row g-3 needs-validation" method="POST" action="/deactivateuser/<%=row.id%>" novalidate> 
+  <input type="submit" class="btn btn-danger" value="Deactivate User">
+</form>
+
+<% }}) %>
+
 <div class="view-user p-5">
   <% rows.forEach(function(row) { %>
   <div class="row mb-5">

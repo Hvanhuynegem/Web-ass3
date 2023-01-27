@@ -14,7 +14,7 @@ class User {
 
     // view active users
     viewActiveUsers(callback) {
-        this.connection.query('SELECT * FROM user WHERE status = "active"', (err, rows) => {
+        this.connection.query('SELECT * FROM user WHERE status = "active" OR status = "none"', (err, rows) => {
 
             if (err) callback(err, null);
             else callback(null, rows);
@@ -74,6 +74,24 @@ class User {
             else callback(null, rows);
         });
     };
+
+    // activate user
+    activateUser(id, callback) {
+        this.connection.query('UPDATE user SET status = ? WHERE id = ?', ['active', id], (err, rows) => {
+
+            if (err) callback(err, null);
+            else callback(null, rows);
+        });
+    }
+
+    // deactivate user
+    deactivateUser(id, callback) {
+        this.connection.query('UPDATE user SET status = ? WHERE id = ?', ['none', id], (err, rows) => {
+
+            if (err) callback(err, null);
+            else callback(null, rows);
+        });
+    }
 }
 
 module.exports = new User();

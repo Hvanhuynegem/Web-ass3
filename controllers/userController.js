@@ -128,7 +128,49 @@ exports.viewall = (req, res) => {
 
   User.viewUsers(req.params.id, (err, rows) => {
     if (!err) {
-      res.render('view-user', { rows });
+      res.render('view-user', { rows, alert: '' });
+    } else {
+      console.log(err);
+    }
+    console.log('The data from user table: \n', rows);
+  });
+}
+
+// Activate User
+exports.activateUser = (req, res) => {
+  User.activateUser(req.params.id, (err, rows) => {
+    if (!err) {
+      User.viewUsers(req.params.id, (err, rows) => {
+        if (!err) {
+          let name = rows[0].first_name;
+          res.render('view-user', { rows, alert: `${name} has been activated.` });
+        } else {
+          console.log(err);
+        }
+        
+        console.log('The data from user table: \n', rows);
+      });
+    } else {
+      console.log(err);
+    }
+    console.log('The data from user table: \n', rows);
+  });
+}
+
+// Deactivate User
+exports.deactivateUser = (req, res) => {
+  User.deactivateUser(req.params.id, (err, rows) => {
+    if (!err) {
+      User.viewUsers(req.params.id, (err, rows) => {
+        if (!err) {
+          let name = rows[0].first_name;
+          res.render('view-user', { rows, alert: `${name} has been deactivated.` });
+        } else {
+          console.log(err);
+        }
+        
+        console.log('The data from user table: \n', rows);
+      });
     } else {
       console.log(err);
     }

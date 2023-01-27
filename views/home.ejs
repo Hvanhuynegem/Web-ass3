@@ -28,7 +28,13 @@
   <tbody>
 
     <% rows.forEach(function(row) { %>
+
+    <% if (row.status == "active") { %>
+    <tr style="background-color: #90c090;">
+    <% } else { %>
     <tr>
+    <% } %>
+
       <th scope="row"><%row.id%></th>
       <td><%=row.first_name%></td>
       <td><%=row.last_name%></td>
